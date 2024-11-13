@@ -1,0 +1,13 @@
+{
+    "python.testing.pytestArgs": [
+        "-v",
+        "-s",
+        "--cov=nqs",
+        "--cov-report=xml",
+        // "--pdb",
+        "tests/",
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.envFile": "${workspaceFolder}/.env"
+}

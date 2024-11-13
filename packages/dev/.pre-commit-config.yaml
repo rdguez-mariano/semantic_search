@@ -1,0 +1,53 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+    -   id: check-json
+        exclude: .vscode/|.devcontainer/
+    -   id: check-merge-conflict
+    -   id: check-yaml
+        args: [--allow-multiple-documents]
+        # exclude: >
+        #   (?x)^(
+        #       datasets|
+        #       models|
+        #   )$
+    -   id: debug-statements
+        exclude: tests/manual.py
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    # -   id: detect-private-key
+    #     exclude: .ssh/
+    # -   id: no-commit-to-branch
+    #     args: ["-b", "main", "-b", "dev"]
+-   repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+    -   id: isort
+        args: [--profile, black]
+-   repo: https://github.com/ambv/black
+    rev: 24.4.2
+    hooks:
+    -   id: black
+-   repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+    -   id: flake8
+        args: [--max-line-length, '79', --extend-ignore, E203]
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.0
+    hooks:
+    -   id: mypy
+-   repo: git@github.com:rdguez-mariano/mrg-pre-commit-hooks.git
+    rev: 0.0.2
+    hooks:
+    -   id: nbclean
+-   repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: v2.13.0
+    hooks:
+    -   id: pretty-format-toml
+        args: [--autofix, --no-sort]
+        files: ^.*\.toml$
+    -   id: pretty-format-yaml
+        args: [--autofix, --indent, '4']
+        # args: [--autofix, --indent, '4', --preserve-quotes, --offset, '4']

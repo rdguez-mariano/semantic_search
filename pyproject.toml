@@ -1,0 +1,71 @@
+[tool.poetry]
+package-mode = false
+name = "nqs"
+version = "0.0.0"
+repository = "https://github.com/rdguez-mariano/portfolio"
+description = "Nano Quant Services (NQS)"
+authors = ["Mariano Rodriguez <rdguez.mariano@gmail.com>"]
+readme = "README.md"
+
+[tool.black]
+target-version = ['py39']
+line_length = 79
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 79
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+known_local_folder = ["nqs"]
+
+[tool.coverage.run]
+omit = [
+  "*__init__*",
+  "tests/*",
+  "scripts/*"
+]
+
+[tool.pytest.ini_options]
+log_cli = true
+addopts = "--ignore-glob=postgres*/ --cov=nqs --cov-report xml"
+filterwarnings = [
+  # note the use of single quote below to denote "raw" strings in TOML
+  'ignore:::tensorboard',
+  'ignore:::torch.utils.tensorboard'
+]
+testpaths = [
+  "tests"
+]
+
+# Uncomment below section to enforce a minimum test coverage
+# [tool.coverage.report]
+# fail_under = 90
+# exclude_lines = [
+# "pragma: no cover",
+# "if TYPE_CHECKING:"
+# ]
+# omit = [
+# "*/__init__.py",
+# "*/tests/*",
+# "*/scripts/*",
+# "*types.py",
+# ]

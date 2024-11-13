@@ -1,0 +1,35 @@
+services:
+    app:
+        image: 192.168.8.15:5000/app
+        build:
+            context: ../
+            dockerfile: ./docker/app/Dockerfile
+            args:
+                DOCKER_USER: andros
+                DOCKER_UID: ${UID:-1000}
+                DOCKER_GID: ${GID:-1000}
+        deploy:
+            mode: replicated
+            replicas: 1
+            endpoint_mode: vip
+            resources:
+                reservations:
+                    devices:
+                    -   driver: nvidia
+                        count: all
+                        capabilities: [gpu]
+        environment:
+            NVIDIA_VISIBLE_DEVICES: all
+            NQS_APP_WORK_FORLDER: /workspace/
+            NQS_LANGCENTER_DATAFOLDER: /workspace/langcenter/
+            OLLAMA_SERVER: ollama
+            HF_TOKEN: ${HF_TOKEN}
+            OVH_AI_ENDPOINTS_ACCESS_TOKEN: ${OVH_AI_ENDPOINTS_ACCESS_TOKEN}
+        ports:
+        -   8502:8501
+        volumes:
+        -   ../workspace/:/workspace/
+        -   ~/.config/gcloud/:/home/andros/.config/gcloud/:ro
+        -   ~/.cache/huggingface/:/home/andros/.cache/huggingface/
+    # entrypoint: []
+    # command: /bin/sh -c "while sleep 1000; do :; done"
